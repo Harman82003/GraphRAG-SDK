@@ -9,8 +9,7 @@ from .model import (
 from typing import Union
 from openai import OpenAI
 import os
-from dotenv import load_dotenv
-load_dotenv()
+
 
 
 class OpenAiGenerativeModel(GenerativeModel):
@@ -20,16 +19,20 @@ class OpenAiGenerativeModel(GenerativeModel):
     def __init__(
         self,
         model_name: str,
+        api_key:str,
+        base_url:str,
         generation_config: Union[GenerativeModelConfig, None] = None,
         system_instruction: Union[str, None] = None,
     ):
         self.model_name = model_name
+        self.api_key=api_key,             #added
+        self.base_url=base_url,           #added
         self.generation_config = generation_config or GenerativeModelConfig()
         self.system_instruction = system_instruction
 
     def _get_model(self) -> OpenAI:
         if self.client is None:
-            self.client = OpenAI(base_url=os.getenv("OPENAI_BASE_URL"),api_key=os.getenv("OPENAI_API_KEY"))
+            self.client = OpenAI(base_url=self.base_url,api_key=self.api_key)
 
         return self.client
 
@@ -60,6 +63,8 @@ class OpenAiGenerativeModel(GenerativeModel):
     def to_json(self) -> dict:
         return {
             "model_name": self.model_name,
+            "api_key":self.api_key,        #added 
+            "base_url":self.base_url,      #added
             "generation_config": self.generation_config.to_json(),
             "system_instruction": self.system_instruction,
         }
@@ -67,7 +72,7 @@ class OpenAiGenerativeModel(GenerativeModel):
     @staticmethod
     def from_json(json: dict) -> "GenerativeModel":
         return OpenAiGenerativeModel(
-            json["model_name"],
+            model_name=json["model_name"],api_key=json["api_key"],base_url=json["base_url"],  #modded
             generation_config=GenerativeModelConfig.from_json(
                 json["generation_config"]
             ),
