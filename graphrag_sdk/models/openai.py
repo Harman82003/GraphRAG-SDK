@@ -8,6 +8,9 @@ from .model import (
 )
 from typing import Union
 from openai import OpenAI
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 
 class OpenAiGenerativeModel(GenerativeModel):
@@ -26,7 +29,7 @@ class OpenAiGenerativeModel(GenerativeModel):
 
     def _get_model(self) -> OpenAI:
         if self.client is None:
-            self.client = OpenAI()
+            self.client = OpenAI(base_url=os.getenv("OPENAI_BASE_URL"),api_key=os.getenv("OPENAI_API_KEY"))
 
         return self.client
 
