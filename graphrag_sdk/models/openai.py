@@ -25,8 +25,8 @@ class OpenAiGenerativeModel(GenerativeModel):
         system_instruction: Union[str, None] = None,
     ):
         self.model_name = model_name
-        self.api_key=api_key,             #added
-        self.base_url=base_url,           #added
+        self.api_key=api_key          #added
+        self.base_url=base_url           #added
         self.generation_config = generation_config or GenerativeModelConfig()
         self.system_instruction = system_instruction
 
