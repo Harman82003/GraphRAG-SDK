@@ -73,7 +73,7 @@ class Attribute:
     """
 
     def __init__(
-        self, name: str, attr_type: AttributeType, unique: bool = False, required: bool = False
+        self, name: str, description:str, unique: bool = False, required: bool = False
     ):
         """
         Initialize a new Attribute object.
@@ -85,8 +85,8 @@ class Attribute:
             required (bool, optional): Indicates whether the attribute is required. Defaults to False.
         """
         self.name = re.sub(r"([^a-zA-Z0-9_])", "_", name)
-        self.type = attr_type
         self.unique = unique
+        self.description=description
         self.required = required
 
     @staticmethod
@@ -105,9 +105,9 @@ class Attribute:
 
         return Attribute(
             txt["name"],
-            AttributeType.from_string(txt["type"]),
             txt["unique"],
             txt["required"] if "required" in txt else False,
+            txt["description"]
         )
 
     @staticmethod
@@ -152,7 +152,7 @@ class Attribute:
         """
         json_data = {
             "name": self.name,
-            "type": self.type,
+            "description": self.description,
             "unique": self.unique,
             "required": self.required,
         }
@@ -168,4 +168,4 @@ class Attribute:
         Returns:
             str: A string representation of the Attribute object.
         """
-        return f"{self.name}: \"{self.type}{'!' if self.unique else ''}{'*' if self.required else ''}\""
+        return f"{self.name}: \"{self.description}{'!' if self.unique else ''}{'*' if self.required else ''}\""
