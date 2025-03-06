@@ -39,76 +39,76 @@ Schema:
     {
       "label": "Domain",
       "attributes": [
-        {"name": "name", "type": "string", "unique": true, "required": true},
-        {"name": "description", "type": "string", "unique": false, "required": false},
-        {"name": "scope", "type": "string", "unique": false, "required": false},
-        {"name": "standards", "type": "string", "unique": false, "required": false}
+        {"name": "name", "unique": true, "required": true, "description": "The specific automotive domain or feature area being tested (e.g., 'Digital Key', 'ADAS', 'Infotainment')"},
+        {"name": "description", "unique": false, "required": false, "description": "Detailed explanation of the automotive domain and its scope"},
+        {"name": "scope", "unique": false, "required": false, "description": "The boundaries and coverage of the automotive domain or feature"},
+        {"name": "standards", "unique": false, "required": false, "description": "Relevant industry standards applicable to this domain (e.g., CCC, ISO 26262)"}
       ]
     },
     {
       "label": "Concept",
       "attributes": [
-        {"name": "name", "type": "string", "unique": true, "required": true},
-        {"name": "description", "type": "string", "unique": false, "required": false},
-        {"name": "purpose", "type": "string", "unique": false, "required": false},
-        {"name": "benefits", "type": "string", "unique": false, "required": false},
-        {"name": "key_components", "type": "string", "unique": false, "required": false}
+        {"name": "name", "unique": true, "required": true, "description": "Name of the automotive testing or system concept (e.g., 'HIL Testing', 'System Integration')"},
+        {"name": "description", "unique": false, "required": false, "description": "Detailed explanation of the concept and its applications"},
+        {"name": "purpose", "unique": false, "required": false, "description": "The primary goal or objective of implementing this concept"},
+        {"name": "benefits", "unique": false, "required": false, "description": "Advantages gained from implementing this concept in automotive testing"},
+        {"name": "key_components", "unique": false, "required": false, "description": "Essential elements or parts that make up this concept"}
       ]
     },
     {
       "label": "Steps",
       "attributes": [
-        {"name": "name", "type": "string", "unique": true, "required": true},
-        {"name": "purpose", "type": "string", "unique": false, "required": false},
-        {"name": "target_users", "type": "string", "unique": false, "required": false},
-        {"name": "primary_goal", "type": "string", "unique": false, "required": false}
+        {"name": "name", "unique": true, "required": true, "description": "Name of the overall prompt chain process (e.g., 'Automotive HIL Test Bench Design')"},
+        {"name": "purpose", "unique": false, "required": false, "description": "The overall objective of this prompt chain sequence"},
+        {"name": "target_users", "unique": false, "required": false, "description": "The intended audience or users of this prompt chain (e.g., 'Automotive Test Engineers')"},
+        {"name": "primary_goal", "unique": false, "required": false, "description": "The main outcome expected from completing all steps in the sequence"}
       ]
     },
     {
       "label": "Step",
       "attributes": [
-        {"name": "name", "type": "string", "unique": true, "required": true},
-        {"name": "title", "type": "string", "unique": false, "required": true},
-        {"name": "role", "type": "string", "unique": false, "required": false},
-        {"name": "description", "type": "string", "unique": false, "required": false},
-        {"name": "purpose", "type": "string", "unique": false, "required": false}
+        {"name": "name", "unique": true, "required": true, "description": "Unique identifier for an individual system prompt (e.g., 'Collect Feature & Documentation')"},
+        {"name": "title", "unique": false, "required": true, "description": "Descriptive title for the step in the HIL design process"},
+        {"name": "role", "unique": false, "required": false, "description": "The expert role the LLM assumes during this step (e.g., 'Automotive HIL Expert')"},
+        {"name": "description", "unique": false, "required": false, "description": "Detailed explanation of what this step accomplishes"},
+        {"name": "purpose", "unique": false, "required": false, "description": "The specific objective this step aims to achieve in the overall process"}
       ]
     },
     {
       "label": "RequiredDocument",
       "attributes": [
-        {"name": "name", "type": "string", "unique": true, "required": true},
-        {"name": "format", "type": "string", "unique": false, "required": false},
-        {"name": "description", "type": "string", "unique": false, "required": false},
-        {"name": "purpose", "type": "string", "unique": false, "required": false},
-        {"name": "importance", "type": "string", "unique": false, "required": false}
+        {"name": "name", "unique": true, "required": true, "description": "Name of the document needed (e.g., 'System Architecture Diagram', 'ECU Pinout Diagram')"},
+        {"name": "format", "unique": false, "required": false, "description": "Expected format of the document (e.g., 'JSON', 'Base64')"},
+        {"name": "description", "unique": false, "required": false, "description": "Detailed explanation of the document's contents"},
+        {"name": "purpose", "unique": false, "required": false, "description": "Why this document is needed for the HIL test bench design"},
+        {"name": "importance", "unique": false, "required": false, "description": "Whether the document is mandatory or optional for proceeding"}
       ]
     },
     {
       "label": "Task",
       "attributes": [
-        {"name": "name", "type": "string", "unique": true, "required": true},
-        {"name": "description", "type": "string", "unique": false, "required": false},
-        {"name": "expected_input", "type": "string", "unique": false, "required": false},
-        {"name": "completion_criteria", "type": "string", "unique": false, "required": false}
+        {"name": "name", "unique": true, "required": true, "description": "Name of the specific action to perform (e.g., 'Parse System Architecture', 'Generate JSON output')"},
+        {"name": "description", "unique": false, "required": false, "description": "Detailed explanation of how to perform this task"},
+        {"name": "expected_input", "unique": false, "required": false, "description": "Data or information needed to complete this task"},
+        {"name": "completion_criteria", "unique": false, "required": false, "description": "Conditions that indicate when this task is successfully completed"}
       ]
     },
     {
       "label": "Constraint",
       "attributes": [
-        {"name": "name", "type": "string", "unique": true, "required": true},
-        {"name": "description", "type": "string", "unique": false, "required": false},
-        {"name": "enforcement", "type": "string", "unique": false, "required": false},
-        {"name": "impact", "type": "string", "unique": false, "required": false}
+        {"name": "name", "unique": true, "required": true, "description": "Name of the rule or limitation (e.g., 'Maintain accuracy', 'Domain focus')"},
+        {"name": "description", "unique": false, "required": false, "description": "Detailed explanation of the constraint and why it exists"},
+        {"name": "enforcement", "unique": false, "required": false, "description": "How this constraint should be applied during the HIL design process"},
+        {"name": "impact", "unique": false, "required": false, "description": "The effect of this constraint on the final HIL test bench design"}
       ]
     },
     {
       "label": "EdgeCase",
       "attributes": [
-        {"name": "name", "type": "string", "unique": true, "required": true},
-        {"name": "description", "type": "string", "unique": false, "required": false},
-        {"name": "handling_strategy", "type": "string", "unique": false, "required": false},
-        {"name": "impact_assessment", "type": "string", "unique": false, "required": false}
+        {"name": "name", "unique": true, "required": true, "description": "Name of the special situation (e.g., 'Partial Documents', 'Multiple Communication Buses')"},
+        {"name": "description", "unique": false, "required": false, "description": "Detailed explanation of this edge case and its challenges"},
+        {"name": "handling_strategy", "unique": false, "required": false, "description": "Recommended approach for addressing this edge case"},
+        {"name": "impact_assessment", "unique": false, "required": false, "description": "Potential effects of this edge case on the HIL test bench design"}
       ]
     }
   ],
@@ -157,13 +157,11 @@ Schema:
     }
   ]
 }
-
 ```
 
 For example:
 ```
-{"entities":[{"label":"Domain","attributes":[{"name":"name","type":"string","unique":true,"required":true},{"name":"description","type":"string","unique":false,"required":false},{"name":"scope","type":"string","unique":false,"required":false}]},{"label":"Concept","attributes":[{"name":"name","type":"string","unique":true,"required":true},{"name":"description","type":"string","unique":false,"required":false},{"name":"purpose","type":"string","unique":false,"required":false}]},{"label":"Step","attributes":[{"name":"name","type":"string","unique":true,"required":true},{"name":"title","type":"string","unique":false,"required":true},{"name":"description","type":"string","unique":false,"required":false}]},{"label":"RequiredDocument","attributes":[{"name":"name","type":"string","unique":true,"required":true},{"name":"format","type":"string","unique":false,"required":false},{"name":"importance","type":"string","unique":false,"required":false}]}],"relations":[{"label":"CONTAINS_STEP","source":{"label":"Steps"},"target":{"label":"Step"},"attributes":[]},{"label":"LEADS_TO","source":{"label":"Step"},"target":{"label":"Step"},"attributes":[{"name":"order","type":"number","unique":true,"required":true}]},{"label":"REQUIRES","source":{"label":"Step"},"target":{"label":"RequiredDocument"},"attributes":[{"name":"mandatory","type":"boolean","unique":false,"required":true}]},{"label":"IMPLEMENTS","source":{"label":"Steps"},"target":{"label":"Concept"},"attributes":[]}]}
-
+{"entities":[{"label":"Domain","attributes":[{"name":"name","unique":true,"required":true,"description":"The specific automotive domain or feature area being tested (e.g., 'Digital Key', 'ADAS', 'Infotainment')"},{"name":"description","unique":false,"required":false,"description":"Detailed explanation of the automotive domain and its scope"},{"name":"scope","unique":false,"required":false,"description":"The boundaries and coverage of the automotive domain or feature"}]},{"label":"Concept","attributes":[{"name":"name","unique":true,"required":true,"description":"Name of the automotive testing or system concept (e.g., 'HIL Testing', 'System Integration')"},{"name":"description","unique":false,"required":false,"description":"Detailed explanation of the concept and its applications"},{"name":"purpose","unique":false,"required":false,"description":"The primary goal or objective of implementing this concept"}]},{"label":"Step","attributes":[{"name":"name","unique":true,"required":true,"description":"Unique identifier for an individual system prompt (e.g., 'Collect Feature & Documentation')"},{"name":"title","unique":false,"required":true,"description":"Descriptive title for the step in the HIL design process"},{"name":"description","unique":false,"required":false,"description":"Detailed explanation of what this step accomplishes"}]},{"label":"RequiredDocument","attributes":[{"name":"name","unique":true,"required":true,"description":"Name of the document needed (e.g., 'System Architecture Diagram', 'ECU Pinout Diagram')"},{"name":"format","unique":false,"required":false,"description":"Expected format of the document (e.g., 'JSON', 'Base64')"},{"name":"importance","unique":false,"required":false,"description":"Whether the document is mandatory or optional for proceeding"}]}],"relations":[{"label":"CONTAINS_STEP","source":{"label":"Steps"},"target":{"label":"Step"},"attributes":[]},{"label":"LEADS_TO","source":{"label":"Step"},"target":{"label":"Step"},"attributes":[{"name":"order","unique":true,"required":true,"description":"Sequence number indicating the order of steps"}]},{"label":"REQUIRES","source":{"label":"Step"},"target":{"label":"RequiredDocument"},"attributes":[{"name":"mandatory","unique":false,"required":true,"description":"Indicates whether the document is required or optional for the step"}]},{"label":"IMPLEMENTS","source":{"label":"Steps"},"target":{"label":"Concept"},"attributes":[]}]}
 ```
 
 Do not use the example Movie context to assume the ontology. The ontology should be created based on the provided text only.
