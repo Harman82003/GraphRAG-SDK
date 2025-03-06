@@ -35,133 +35,135 @@ Make sure the output JSON is returned inline and with no spaces, so to save in t
 Schema:
 ```json
 {
-  "$schema": "https://json-schema.org/draft/2019-09/schema",
-  "$id": "http://example.com/example.json",
-  "type": "object",
-  "title": "Graph Schema",
-  "required": ["entities", "relations"],
-  "properties": {
-    "entities": {
-      "type": "array",
-      "title": "The entities Schema",
-      "items": {
-        "type": "object",
-        "title": "A Schema",
-        "required": ["label", "attributes"],
-        "properties": {
-          "label": {
-            "type": "string",
-            "title": "The label Schema. Ex: StreamingService",
-            "format": "titlecase"
-          },
-          "attributes": {
-            "type": "array",
-            "title": "The attributes Schema",
-            "items": {
-              "type": "object",
-              "title": "A Schema",
-              "required": ["name", "type", "unique", "required"],
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "title": "The name Schema",
-                  "format": "snakecase"
-                },
-                "type": {
-                  "type": "string",
-                  "enum": ["string", "number", "boolean"],
-                  "title": "The type Schema"
-                },
-                "unique": {
-                  "type": "boolean",
-                  "title": "The unique Schema. Must have at least one unique attribute"
-                },
-                "required": {
-                  "type": "boolean",
-                  "title": "The required Schema. If the attribute is required, it cannot be null or empty"
-                }
-              }
-            }
-          }
-        }
-      }
+  "entities": [
+    {
+      "label": "Domain",
+      "attributes": [
+        {"name": "name", "type": "string", "unique": true, "required": true},
+        {"name": "description", "type": "string", "unique": false, "required": false},
+        {"name": "scope", "type": "string", "unique": false, "required": false},
+        {"name": "standards", "type": "string", "unique": false, "required": false}
+      ]
     },
-    "relations": {
-      "type": "array",
-      "title": "The relations Schema",
-      "items": {
-        "type": "object",
-        "title": "A Schema",
-        "required": ["label", "source", "target"],
-        "properties": {
-          "label": {
-            "type": "string",
-            "title": "The label Schema",
-            "format": "uppercase"
-          },
-          "source": {
-            "type": "object",
-            "title": "The source Schema",
-            "required": ["label"],
-            "properties": {
-              "label": {
-                "type": "string",
-                "format": "titlecase",
-                "title": "The label Schema"
-              }
-            }
-          },
-          "target": {
-            "type": "object",
-            "title": "The target Schema",
-            "required": ["label"],
-            "properties": {
-              "label": {
-                "type": "string",
-                "format": "titlecase",
-                "title": "The label Schema"
-              }
-            }
-          },
-          "attributes": {
-            "type": "array",
-            "title": "The attributes Schema",
-            "items": {
-              "type": "object",
-              "title": "A Schema",
-              "required": ["name", "type", "unique"],
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "title": "The name of the attribute",
-                  "format": "snakecase"
-                },
-                "type": {
-                  "type": "string",
-                  "enum": ["string", "number", "boolean"],
-                  "title": "The type of the attribute"
-                },
-                "unique": {
-                  "type": "boolean",
-                  "title": "If the attribute is unique or not between different relations of the same label"
-                },
-                "required": {
-                  "type": "boolean",
-                  "title": "If the attribute is required or not"
-                }
-              }
-            }
-          }
-        }
-      }
+    {
+      "label": "Concept",
+      "attributes": [
+        {"name": "name", "type": "string", "unique": true, "required": true},
+        {"name": "description", "type": "string", "unique": false, "required": false},
+        {"name": "purpose", "type": "string", "unique": false, "required": false},
+        {"name": "benefits", "type": "string", "unique": false, "required": false},
+        {"name": "key_components", "type": "string", "unique": false, "required": false}
+      ]
+    },
+    {
+      "label": "Steps",
+      "attributes": [
+        {"name": "name", "type": "string", "unique": true, "required": true},
+        {"name": "purpose", "type": "string", "unique": false, "required": false},
+        {"name": "target_users", "type": "string", "unique": false, "required": false},
+        {"name": "primary_goal", "type": "string", "unique": false, "required": false}
+      ]
+    },
+    {
+      "label": "Step",
+      "attributes": [
+        {"name": "name", "type": "string", "unique": true, "required": true},
+        {"name": "title", "type": "string", "unique": false, "required": true},
+        {"name": "role", "type": "string", "unique": false, "required": false},
+        {"name": "description", "type": "string", "unique": false, "required": false},
+        {"name": "purpose", "type": "string", "unique": false, "required": false}
+      ]
+    },
+    {
+      "label": "RequiredDocument",
+      "attributes": [
+        {"name": "name", "type": "string", "unique": true, "required": true},
+        {"name": "format", "type": "string", "unique": false, "required": false},
+        {"name": "description", "type": "string", "unique": false, "required": false},
+        {"name": "purpose", "type": "string", "unique": false, "required": false},
+        {"name": "importance", "type": "string", "unique": false, "required": false}
+      ]
+    },
+    {
+      "label": "Task",
+      "attributes": [
+        {"name": "name", "type": "string", "unique": true, "required": true},
+        {"name": "description", "type": "string", "unique": false, "required": false},
+        {"name": "expected_input", "type": "string", "unique": false, "required": false},
+        {"name": "completion_criteria", "type": "string", "unique": false, "required": false}
+      ]
+    },
+    {
+      "label": "Constraint",
+      "attributes": [
+        {"name": "name", "type": "string", "unique": true, "required": true},
+        {"name": "description", "type": "string", "unique": false, "required": false},
+        {"name": "enforcement", "type": "string", "unique": false, "required": false},
+        {"name": "impact", "type": "string", "unique": false, "required": false}
+      ]
+    },
+    {
+      "label": "EdgeCase",
+      "attributes": [
+        {"name": "name", "type": "string", "unique": true, "required": true},
+        {"name": "description", "type": "string", "unique": false, "required": false},
+        {"name": "handling_strategy", "type": "string", "unique": false, "required": false},
+        {"name": "impact_assessment", "type": "string", "unique": false, "required": false}
+      ]
     }
-  }
+  ],
+  "relations": [
+    {
+      "label": "CONTAINS_STEP",
+      "source": {"label": "Steps"},
+      "target": {"label": "Step"},
+      "attributes": []
+    },
+    {
+      "label": "LEADS_TO",
+      "source": {"label": "Step"},
+      "target": {"label": "Step"},
+      "attributes": []
+    },
+    {
+      "label": "REQUIRES",
+      "source": {"label": "Step"},
+      "target": {"label": "RequiredDocument"},
+      "attributes": []
+    },
+    {
+      "label": "INCLUDES",
+      "source": {"label": "Step"},
+      "target": {"label": "Task"},
+      "attributes": []
+    },
+    {
+      "label": "BELONGS_TO",
+      "source": {"label": "Steps"},
+      "target": {"label": "Domain"},
+      "attributes": []
+    },
+    {
+      "label": "IMPLEMENTS",
+      "source": {"label": "Steps"},
+      "target": {"label": "Concept"},
+      "attributes": []
+    },
+    {
+      "label": "CONSTRAINED_BY",
+      "source": {"label": "Steps"},
+      "target": {"label": "Constraint"},
+      "attributes": []
+    }
+  ]
 }
+
 ```
 
 For example:
 ```
-{"entities":[{"label":"Person","attributes":[{"name":"name","type":"string","unique":true,"required":true},{"name":"age","type":"number","unique":false,"unique":false}]},{"label":"Movie","attributes":[{"name":"title","type":"string","unique":true,"required":true},{"name":"releaseYear","type":"number","unique":false,"required":false}]}],"relations":[{"label":"ACTED_IN","source":{"label":"Person"},"target":{"label":"Movie"},"attributes":[{"name":"role","type":"string","unique":false,"required":true}]}}
+{"entities":[{"label":"Domain","attributes":[{"name":"name","type":"string","unique":true,"required":true},{"name":"description","type":"string","unique":false,"required":false},{"name":"scope","type":"string","unique":false,"required":false}]},{"label":"Concept","attributes":[{"name":"name","type":"string","unique":true,"required":true},{"name":"description","type":"string","unique":false,"required":false},{"name":"purpose","type":"string","unique":false,"required":false}]},{"label":"Step","attributes":[{"name":"name","type":"string","unique":true,"required":true},{"name":"title","type":"string","unique":false,"required":true},{"name":"description","type":"string","unique":false,"required":false}]},{"label":"RequiredDocument","attributes":[{"name":"name","type":"string","unique":true,"required":true},{"name":"format","type":"string","unique":false,"required":false},{"name":"importance","type":"string","unique":false,"required":false}]}],"relations":[{"label":"CONTAINS_STEP","source":{"label":"Steps"},"target":{"label":"Step"},"attributes":[]},{"label":"LEADS_TO","source":{"label":"Step"},"target":{"label":"Step"},"attributes":[{"name":"order","type":"number","unique":true,"required":true}]},{"label":"REQUIRES","source":{"label":"Step"},"target":{"label":"RequiredDocument"},"attributes":[{"name":"mandatory","type":"boolean","unique":false,"required":true}]},{"label":"IMPLEMENTS","source":{"label":"Steps"},"target":{"label":"Concept"},"attributes":[]}]}
+
 ```
 
 Do not use the example Movie context to assume the ontology. The ontology should be created based on the provided text only.
