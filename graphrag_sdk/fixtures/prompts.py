@@ -85,7 +85,7 @@ Schema:
 ```
 
 Do not use the example 'travel' context to assume the ontology. The ontology should be created based on the provided text only.
-
+Extract as many relations as possible, ensure no loss of information takes place when the final file is shared with you
 """
 
 CREATE_ONTOLOGY_PROMPT = """
@@ -148,8 +148,7 @@ Do not create relationships without their corresponding entities.
 Do not use the example Movie context to assume the ontology. The ontology should be created based on the provided text only.
 Do not allow entities without at least one unique attribute.
 
-Ontology:
-{ontology}
+
 """
 
 
