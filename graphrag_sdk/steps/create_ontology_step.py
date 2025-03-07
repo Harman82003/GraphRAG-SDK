@@ -99,16 +99,15 @@ class CreateOntologyStep(Step):
         return self.ontology
 
     def _process_source(
-        self,
-        chat_session: GenerativeModelChatSession,
-        source: AbstractSource,
-        o: Ontology,
-        boundaries: Optional[str] = None,
-        retries: int = 1,
-    ):
-        try:
-            document = next(source.load())
-            
+    self,
+    chat_session: GenerativeModelChatSession,
+    source: AbstractSource,
+    o: Ontology,
+    boundaries: Optional[str] = None,
+    retries: int = 1,
+       ):
+     try:
+        for document in source.load():
             text = document.content[: self.config["max_input_tokens"]]
 
             user_message = CREATE_ONTOLOGY_PROMPT.format(
@@ -161,13 +160,13 @@ class CreateOntologyStep(Step):
                     o = o.merge_with(new_ontology)
 
                 logger.debug(f"Processed document: {document}")
-        except Exception as e:
-            logger.exception(f"Failed - {e}")
-            raise e
-        finally:
-            with self.counter_lock:
-                self.process_files += 1
-            return o
+     except Exception as e:
+        logger.exception(f"Failed - {e}")
+        raise e
+     finally:
+        with self.counter_lock:
+            self.process_files += 1
+        return o
 
     def _fix_ontology(self, chat_session: GenerativeModelChatSession, o: Ontology):
         logger.debug(f"Fixing ontology...")
