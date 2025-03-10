@@ -1,7 +1,6 @@
 from .source import Source
 from .ontology import Ontology
 from .kg import KnowledgeGraph
-from .Create_ontology import Ontologycreate
 from .model_config import KnowledgeGraphModelConfig
 from .models.model import (
     GenerativeModel,

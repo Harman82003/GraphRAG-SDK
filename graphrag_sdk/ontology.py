@@ -8,6 +8,13 @@ from typing import Optional, Union
 from graphrag_sdk.source import AbstractSource
 from graphrag_sdk.models import GenerativeModel
 from .attribute import Attribute, AttributeType
+from graphrag_sdk.fixtures.prompts import (
+    CREATE_ONTOLOGY_SYSTEM,
+    CREATE_ONTOLOGY_PROMPT,
+    FIX_ONTOLOGY_PROMPT,
+    FIX_JSON_PROMPT,
+    BOUNDARIES_PREFIX,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -53,33 +60,47 @@ class Ontology(object):
         self.relations = relations or []
 
     @staticmethod
-    def from_sources(
-        sources: list[AbstractSource],
-        model: GenerativeModel,
-        boundaries: Optional[str] = None,
-        hide_progress: bool = False,
-    ) -> "Ontology":
+    def from_text(text: str, model: GenerativeModel, boundaries: Optional[str] = None) :
         """
-        Create an Ontology object from a list of sources.
+        Create an Ontology object directly from text input.
 
         Args:
-            sources (list[AbstractSource]): A list of AbstractSource objects representing the sources.
-            boundaries (Optional[str]): The boundaries for the ontology.
+            text (str): The raw text to process.
             model (GenerativeModel): The generative model to use.
-            hide_progress (bool): Whether to hide the progress bar.
+            boundaries (Optional[str]): The boundaries for the ontology.
 
         Returns:
             The created Ontology object.
         """
-        step = graphrag_sdk.CreateOntologyStep(
-            sources=sources,
-            ontology=Ontology(),
-            model=model,
-            hide_progress=hide_progress,
-        )
-
-        return step.run(boundaries=boundaries)
-
+        # Create a chat session with the model
+        system_instruction = "You are an ontology creation assistant. Extract entities and relations from the given text."
+        model.with_system_instruction(system_instruction)
+        chat = model.start_chat()
+        
+        # Construct the prompt
+        prompt = str(CREATE_ONTOLOGY_SYSTEM) + f"The content provided by the user is {text}"
+        
+        # Send the prompt to the model with JSON output format
+        response0 = chat.send_message(prompt)
+        print(response0)
+        response1=chat.send_message(str(FIX_ONTOLOGY_PROMPT)+str(response0.text))
+        
+        print(response1)
+        # Parse the JSON response
+        try:
+            ontology_data = json.loads(response1.text)
+            return response1.text,Ontology.from_json(ontology_data)
+        
+        except json.JSONDecodeError as e:
+            logger.error(f"Failed to parse the model's response as JSON: {e}")
+            logger.error(f"Raw response: {response1.text}")
+            return Ontology()
+        except KeyError as e:
+            logger.error(f"Missing expected key in JSON structure: {e}")
+            return Ontology()
+        except Exception as e:
+            logger.error(f"Error processing ontology data: {e}")
+            return Ontology()
     @staticmethod
     def from_json(txt: Union[dict, str]) -> "Ontology":
         """
