@@ -1,4 +1,5 @@
-from graphrag_sdk.models.openai import OpenAiGenerativeModel
+from openai import OpenAI
+from .models.openai import OpenAiGenerativeModel
 from graphrag_sdk.fixtures.prompts import (
     CREATE_ONTOLOGY_SYSTEM,
     CREATE_ONTOLOGY_PROMPT,
@@ -7,10 +8,11 @@ from graphrag_sdk.fixtures.prompts import (
     BOUNDARIES_PREFIX,
 )
 
-client=OpenAiGenerativeModel._get_model()
+
 class Ontologycreate(OpenAiGenerativeModel):
  
- def Ontologycreate(self,file:str):
+ def OCR(self,file:str):
+    client=OpenAI(api_key=self.api_key,base_url=self.base_url)
     completion1 = client.chat.completions.create(
         model=self.model_name,
         messages=[

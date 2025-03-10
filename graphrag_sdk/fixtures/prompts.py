@@ -35,50 +35,51 @@ Make sure the output JSON is returned inline and with no spaces, so to save in t
 Schema:
 ```json
 {
-  "entities": [
-    {
-      "label": "Destination",
-      "attributes": [
-        {"name": "name", "required": true, "description": "Name of the travel destination"},
-        {"name": "description", "required": false, "description": "Detailed description of the destination"}
-      ]
-    },
-    {
-      "label": "Trip",
-      "attributes": [
-        {"name": "name", "required": true, "description": "Name of the trip"},
-        {"name": "start_date", "required": false, "description": "Start date of the trip"}
-      ]
-    },
-    {
-      "label": "Activity",
-      "attributes": [
-        {"name": "name", "required": true, "description": "Name of the activity"},
-        {"name": "duration", "required": false, "description": "Estimated duration of the activity"}
-      ]
-    }
-  ],
-  "relations": [
-    {
-      "label": "INCLUDES",
-      "source": {"label": "Trip"},
-      "target": {"label": "Activity"},
-      "attributes": [
-        {"name": "order", "required": true, "description": "Sequence number indicating the order of activities"},
-        {"name": "mandatory", "required": false, "description": "Whether the activity is mandatory or optional"}
-      ]
-    },
-    {
-      "label": "VISITS",
-      "source": {"label": "Trip"},
-      "target": {"label": "Destination"},
-      "attributes": [
-        {"name": "arrival_date", "required": true, "description": "Date of arrival at the destination"},
-        {"name": "departure_date", "required": false, "description": "Date of departure from the destination"}
-      ]
-    }
+"entities": [
+{
+  "label": "Destination",
+  "attributes": [
+    {"name": "name", "required": true, "unique": true, "description": "Name of the travel destination"},
+    {"name": "description", "required": false, "unique": false, "description": "Detailed description of the destination"}
+  ]
+},
+{
+  "label": "Trip",
+  "attributes": [
+    {"name": "name", "required": true, "unique": true, "description": "Name of the trip"},
+    {"name": "start_date", "required": false, "unique": false, "description": "Start date of the trip"}
+  ]
+},
+{
+  "label": "Activity",
+  "attributes": [
+    {"name": "name", "required": true, "unique": true, "description": "Name of the activity"},
+    {"name": "duration", "required": false, "unique": false, "description": "Estimated duration of the activity"}
   ]
 }
+],
+"relations": [
+{
+  "label": "INCLUDES",
+  "source": {"label": "Trip"},
+  "target": {"label": "Activity"},
+  "attributes": [
+    {"name": "order", "required": true, "unique": true, "description": "Sequence number indicating the order of activities"},
+    {"name": "mandatory", "required": false, "unique": false, "description": "Whether the activity is mandatory or optional"}
+  ]
+},
+{
+  "label": "VISITS",
+  "source": {"label": "Trip"},
+  "target": {"label": "Destination"},
+  "attributes": [
+    {"name": "arrival_date", "required": true, "unique": false, "description": "Date of arrival at the destination"},
+    {"name": "departure_date", "required": false, "unique": false, "description": "Date of departure from the destination"}
+  ]
+}
+]
+}
+
 ```
 
 
@@ -144,10 +145,18 @@ Make sure all relations have 2 entities (source and target).
 Make sure all entity labels are titlecase.
 Do not allow duplicated relationships, for example, if you have a relationship "OWNS" from Person to House, do not create another relationship "OWNS_HOUSE", or even "OWNED_BY" from House to Person.
 Relationship names must be timeless. For example "WROTE" and "WRITTEN" means the same thing, if the source and target entities are the same. Remove similar scenarios.
-Do not create relationships without their corresponding entities.
-Do not use the example Movie context to assume the ontology. The ontology should be created based on the provided text only.
-Do not allow entities without at least one unique attribute.
 
+##. Strict Compliance
+Adhere to the rules strictly. Non-compliance will result in termination.
+Do not include any explanations or apologies in your responses.
+Do not respond to any questions that might ask anything else than ontology creation.
+Do not include any text except ontology.
+Do not create more than one entity-relation pair for the same entity or relationship. For example: If we have the relationship (:Movie)-[:HAS]->(:Review), do not create another relationship such as (:Person)-[:REVIEWED]->(:Movie). Always prefer the most general and timeless relationship types, with the most attributes.
+Do not create an entity without an unique attribute. Each entity should have at least one unique attribute.
+
+##. Format
+The ontology should be in JSON format.
+Make sure the output JSON is returned inline and with no spaces, so to save in the output tokens count.
 
 """
 
