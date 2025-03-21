@@ -89,7 +89,7 @@ class Ontology(object):
         # Parse the JSON response
         try:
             ontology_data = json.loads(response1.text)
-            return response1.text,Ontology.from_json(ontology_data)
+            return Ontology.from_json(ontology_data)
         
         except json.JSONDecodeError as e:
             logger.error(f"Failed to parse the model's response as JSON: {e}")
