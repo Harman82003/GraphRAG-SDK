@@ -83,13 +83,13 @@ class Ontology(object):
         # Send the prompt to the model with JSON output format
         response0 = chat.send_message(prompt)
         print(response0)
-        response1=chat.send_message(str(FIX_ONTOLOGY_PROMPT)+str(response0.text))
+        response1=chat.send_message(str(FIX_ONTOLOGY_PROMPT)+str(response0.text)+str(text))
         
         print(response1)
         # Parse the JSON response
         try:
             ontology_data = json.loads(response1.text)
-            return response1.text,Ontology.from_json(ontology_data)
+            return Ontology.from_json(ontology_data)
         
         except json.JSONDecodeError as e:
             logger.error(f"Failed to parse the model's response as JSON: {e}")

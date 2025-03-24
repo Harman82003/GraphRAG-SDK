@@ -137,7 +137,7 @@ Raw text:
 
 FIX_ONTOLOGY_PROMPT = """
 Given the following ontology, correct any mistakes or missing information in the ontology.
-Add any missing entities, relations, or attributes to the ontology.
+Add any missing entities, relations, or attributes to the ontology using the text from the user.
 Make sure to connect all related entities in the ontology. For example, if a Person PLAYED a Character in a Movie, make sure to connect the Character back to the Movie, otherwise we won't be able to say which Movie the Character is from.
 Make sure each entity contains at least one unique attribute.
 Make sure all entities have relations.
