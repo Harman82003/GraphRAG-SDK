@@ -1,7 +1,7 @@
 CREATE_ONTOLOGY_SYSTEM = """
 ## 1. Overview\n"
 You are a top-tier algorithm designed for extracting ontologies in structured formats to build a knowledge graph from raw texts.
-Capture as many entities, relationships, and attributes information from the text as possible. 
+Capture as many entities, relationships, and attributes information from the text as possible. The description is the most important and I want all the info from the user's text to be saved into the description
 - **Entities** represent entities and concepts. Must have at least one unique attribute.
 - **Relations** represent relationships between entities and concepts.
 The aim is to achieve simplicity and clarity in the knowledge graph, making it accessible for a vast audience.
@@ -33,54 +33,205 @@ Do not return the schema as a response, but use it only for reference.
 Make sure the output JSON is returned inline and with no spaces, so to save in the output tokens count.
 
 Schema:
-```json
 {
-"entities": [
-{
-  "label": "Destination",
-  "attributes": [
-    {"name": "name", "required": true, "unique": true, "description": "Name of the travel destination"},
-    {"name": "description", "required": false, "unique": false, "description": "Detailed description of the destination"}
-  ]
-},
-{
-  "label": "Trip",
-  "attributes": [
-    {"name": "name", "required": true, "unique": true, "description": "Name of the trip"},
-    {"name": "start_date", "required": false, "unique": false, "description": "Start date of the trip"}
-  ]
-},
-{
-  "label": "Activity",
-  "attributes": [
-    {"name": "name", "required": true, "unique": true, "description": "Name of the activity"},
-    {"name": "duration", "required": false, "unique": false, "description": "Estimated duration of the activity"}
-  ]
-}
+"entities":[
+  {
+    "label":"DigitalKeySystem",
+    "attributes":[
+      {"name":"name","required":true,"unique":true},
+      {"name":"description","required":false,"unique":false,"value":"Framework for keyless vehicle access using mobile devices, conforming to CCC standards and utilizing ECUs, protocols (CAN/UWB/NFC), and security mechanisms"}
+    ]
+  },
+  {
+    "label":"Document",
+    "attributes":[
+      {"name":"documentId","required":true,"unique":true},
+      {"name":"title","required":false,"unique":false,"value":"CC-TS-101"},
+      {"name":"description","required":false,"unique":false,"value":"ECU connections, signal diagrams, provisioning, usage, and revocation processes"}
+    ]
+  },
+  {
+    "label":"Standard",
+    "attributes":[
+      {"name":"name","required":true,"unique":true,"value":"CCC Digital Key"},
+      {"name":"version","required":false,"unique":false,"value":"3.0"},
+      {"name":"description","required":false,"unique":false,"value":"Industry guidelines for secure, interoperable Digital Key systems"}
+    ]
+  },
+  {
+    "label":"Functionality",
+    "attributes":[
+      {"name":"name","required":true,"unique":true,"value":"Vehicle Access Control"},
+      {"name":"description","required":false,"unique":false,"value":"Door locking/unlocking via NFC/BLE, key sharing, revocation, engine start/stop, trunk operations"}
+    ]
+  },
+  {
+    "label":"ECU",
+    "attributes":[
+      {"name":"name","required":true,"unique":true,"value":"Digital Key ECU"},
+      {"name":"description","required":false,"unique":false,"value":"Processes authentication and manages secure communication with mobile devices"},
+      {"name":"role","required":false,"unique":false,"value":"Authentication Controller"}
+    ]
+  },
+  {
+    "label":"Protocol",
+    "attributes":[
+      {"name":"name","required":true,"unique":true,"value":"UWB"},
+      {"name":"description","required":false,"unique":false,"value":"Ultra-Wideband protocol for precise proximity detection"},
+      {"name":"purpose","required":false,"unique":false,"value":"Enhanced security and location accuracy"}
+    ]
+  },
+  {
+    "label":"AuthenticationMechanism",
+    "attributes":[
+      {"name":"name","required":true,"unique":true,"value":"NFC Authentication"},
+      {"name":"description","required":false,"unique":false,"value":"Proximity-based authentication using Near Field Communication"},
+      {"name":"security_level","required":false,"unique":false,"value":"High"}
+    ]
+  },
+  {
+    "label":"TestType",
+    "attributes":[
+      {"name":"name","required":true,"unique":true,"value":"Functional Validation"},
+      {"name":"description","required":false,"unique":false,"value":"Tests to verify Digital Key provisioning, usage and revocation processes"},
+      {"name":"focus","required":false,"unique":false,"value":"End-to-end functionality"}
+    ]
+  },
+  {
+    "label":"Input",
+    "attributes":[
+      {"name":"name","required":true,"unique":true,"value":"System Architecture Diagram"},
+      {"name":"description","required":false,"unique":false,"value":"Complete system layout showing ECU connections and signal flow"},
+      {"name":"format","required":false,"unique":false,"value":"PDF/Visio"}
+    ]
+  },
+  {
+    "label":"TestScenario",
+    "attributes":[
+      {"name":"name","required":true,"unique":true,"value":"Vehicle Unlock at Zero Speed"},
+      {"name":"description","required":false,"unique":false,"value":"Testing door unlock functionality when vehicle is stationary"},
+      {"name":"type","required":false,"unique":false,"value":"Positive"}
+    ]
+  },
+  {
+    "label":"SignalType",
+    "attributes":[
+      {"name":"name","required":true,"unique":true,"value":"Unlock Request"},
+      {"name":"description","required":false,"unique":false,"value":"Signal requesting vehicle door unlock operation"},
+      {"name":"direction","required":false,"unique":false,"value":"Input"}
+    ]
+  },
+  {
+    "label":"Constraint",
+    "attributes":[
+      {"name":"name","required":true,"unique":true,"value":"Speed Lockout"},
+      {"name":"description","required":false,"unique":false,"value":"Prevents certain operations above specified speed thresholds"},
+      {"name":"type","required":false,"unique":false,"value":"Safety"}
+    ]
+  },
+  {
+    "label":"SimulationTool",
+    "attributes":[
+      {"name":"name","required":true,"unique":true,"value":"Vector CANoe"},
+      {"name":"description","required":false,"unique":false,"value":"Tool for CAN protocol testing and validation"},
+      {"name":"type","required":false,"unique":false,"value":"Network Simulation"}
+    ]
+  },
+  {
+    "label":"MobileDevice",
+    "attributes":[
+      {"name":"type","required":true,"unique":true,"value":"Smartphone"},
+      {"name":"description","required":false,"unique":false,"value":"Primary device for Digital Key provisioning and usage"}
+    ]
+  }
 ],
-"relations": [
-{
-  "label": "INCLUDES",
-  "source": {"label": "Trip"},
-  "target": {"label": "Activity"},
-  "attributes": [
-    {"name": "order", "required": true, "unique": true, "description": "Sequence number indicating the order of activities"},
-    {"name": "mandatory", "required": false, "unique": false, "description": "Whether the activity is mandatory or optional"}
-  ]
-},
-{
-  "label": "VISITS",
-  "source": {"label": "Trip"},
-  "target": {"label": "Destination"},
-  "attributes": [
-    {"name": "arrival_date", "required": true, "unique": false, "description": "Date of arrival at the destination"},
-    {"name": "departure_date", "required": false, "unique": false, "description": "Date of departure from the destination"}
-  ]
-}
+"relations":[
+  {
+    "label":"DESCRIBED_IN",
+    "source":{"label":"DigitalKeySystem"},
+    "target":{"label":"Document"},
+    "attributes":[{"name":"context","required":false,"unique":false,"value":"System architecture and functional specifications"}]
+  },
+  {
+    "label":"CONFORMS_TO",
+    "source":{"label":"DigitalKeySystem"},
+    "target":{"label":"Standard"},
+    "attributes":[{"name":"compliance_level","required":false,"unique":false,"value":"Full"}]
+  },
+  {
+    "label":"ENABLES",
+    "source":{"label":"DigitalKeySystem"},
+    "target":{"label":"Functionality"},
+    "attributes":[{"name":"conditions","required":false,"unique":false,"value":"Authentication success and speed below threshold"}]
+  },
+  {
+    "label":"ENABLED_BY",
+    "source":{"label":"Functionality"},
+    "target":{"label":"AuthenticationMechanism"},
+    "attributes":[{"name":"security_level","required":false,"unique":false,"value":"High"}]
+  },
+  {
+    "label":"INTERFACES_WITH",
+    "source":{"label":"DigitalKeySystem"},
+    "target":{"label":"ECU"},
+    "attributes":[{"name":"interface_type","required":false,"unique":false,"value":"CAN Bus"}]
+  },
+  {
+    "label":"COMMUNICATES_WITH",
+    "source":{"label":"ECU"},
+    "target":{"label":"ECU"},
+    "attributes":[{"name":"purpose","required":false,"unique":false,"value":"Authentication verification and door control signals"}]
+  },
+  {
+    "label":"USES",
+    "source":{"label":"DigitalKeySystem"},
+    "target":{"label":"Protocol"},
+    "attributes":[{"name":"usage_purpose","required":false,"unique":false,"value":"Secure proximity-based authentication"}]
+  },
+  {
+    "label":"TESTED_BY",
+    "source":{"label":"DigitalKeySystem"},
+    "target":{"label":"TestType"},
+    "attributes":[{"name":"test_focus","required":false,"unique":false,"value":"Secure provisioning and usage flows"}]
+  },
+  {
+    "label":"REQUIRES",
+    "source":{"label":"DigitalKeySystem"},
+    "target":{"label":"Input"},
+    "attributes":[{"name":"requirement_purpose","required":false,"unique":false,"value":"System validation and integration testing"}]
+  },
+  {
+    "label":"CONNECTS",
+    "source":{"label":"DigitalKeySystem"},
+    "target":{"label":"MobileDevice"},
+    "attributes":[{"name":"connection_type","required":false,"unique":false,"value":"NFC/BLE/UWB"}]
+  },
+  {
+    "label":"INCLUDES",
+    "source":{"label":"TestType"},
+    "target":{"label":"TestScenario"},
+    "attributes":[{"name":"purpose","required":false,"unique":false,"value":"Verify core functionality under normal conditions"}]
+  },
+  {
+    "label":"PROCESSES",
+    "source":{"label":"ECU"},
+    "target":{"label":"SignalType"},
+    "attributes":[{"name":"processing_purpose","required":false,"unique":false,"value":"Authentication and door operation"}]
+  },
+  {
+    "label":"SUBJECT_TO",
+    "source":{"label":"Functionality"},
+    "target":{"label":"Constraint"},
+    "attributes":[{"name":"impact","required":false,"unique":false,"value":"Prevents door unlocking above speed threshold"}]
+  },
+  {
+    "label":"VALIDATED_BY",
+    "source":{"label":"DigitalKeySystem"},
+    "target":{"label":"SimulationTool"},
+    "attributes":[{"name":"validation_purpose","required":false,"unique":false,"value":"CAN network simulation for protocol compliance"}]
+  }
 ]
-}
-
-```
+}```
 
 
 ```
